@@ -33,13 +33,29 @@ To solve this, this project uses a **custom fine-tuned model** (`hand_yolov8n.pt
 
 3.  **Run the detection:**
     ```bash
-    python Hand-Dectedtion.py
+    python Hand-Detection.py
     ```
 
 4.  **Quit:** Press `q` to close the camera window.
 
+## 🚧 Development Journey & Troubleshooting
+
+During the development of this project, we encountered and resolved several specific technical challenges:
+
+* **Model Loading Errors:**
+    * *Issue:* Initially, the script failed because it could not locate the custom model file (`hand_yolov8n.pt`).
+    * *Fix:* We implemented the `os` library to use absolute paths (`os.path.abspath(__file__)`) ensuring the script always finds the model regardless of the directory it's run from.
+
+* **OpenCV Display Crash (`cv2.imshow`):**
+    * *Issue:* The webcam feed would not open, throwing a "size.width > 0" assertion error. This happened because the camera index `0` was occasionally unavailable or locked by another app.
+    * *Fix:* Added a robust check `if not cap.isOpened()` to exit gracefully and print a clear error message if the camera fails to initialize.
+
+* **Git Large File Storage (LFS):**
+    * *Issue:* The model weights file was too large for standard GitHub pushes, causing the upload to hang.
+    * *Fix:* Configured **Git LFS** to track `.pt` files, allowing the large binary model to be uploaded successfully.
+
 ## 📂 Files Included
-* `Hand-Dectedtion.py`: The main Python script that runs the camera and logic.
+* `Hand-Detection.py`: The main Python script that runs the camera and logic.
 * `hand_yolov8n.pt`: The pre-trained AI weights file (the "brain" of the project).
 
 ## 🏆 Credits
